@@ -4,8 +4,7 @@ dir_train = '/u/cs401/speechdata/Training';
 % dir_train = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
 dir_test = '/u/cs401/speechdata/Testing';
 
-trainingData = [];
-i = 1;
+trainingData = struct();
 trainD = dir(dir_train);
 for s = 1:length(trainD)
     folderName = trainD(s).name;
@@ -21,24 +20,29 @@ for s = 1:length(trainD)
             phnDataLine = phnData{iPhn};
             phnDataLine = regexp(phnDataLine,'\s+','split');
             endIndex = min(str2num(phnDataLine{2}) / 128, length(mfccData));
-            trainingData{i} = transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :));
-            i = i + 1;
+            pnn = phnDataLine{3};
+            if ~isfield(trainingData, pnn)
+                trainingData.(pnn) = [];
+            trainingData.(pnn) = [trainingData.(pnn), transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :))];
         end
     end
 end
 
-HMM = initHMM(trainingData);
-[HMM, L] = trainHMM(HMM, trainingData, 5);
-
-save( 'HMM.mat', 'HMM', '-mat');
-
-testData = [];
-fileName = dir([dir_test, filesep, '*.mfcc']);
-for iMfcc = 1:length(fileName)
-    testData = dlmread([dir_test, filesep, fileName(iMfcc).name]);
-
-    disp(loglikHMM(HMM, testData));
+pnns = fieldnames(trainingData);
+for i = 1:length(pnns)
+    pnn = pnns{i};
+    HMM = initHMM(trainingData.(pnn));
+    [HMM, L] = trainHMM(HMM, trainingData.(pnn), 5);
+    save( ['HMM_', pnn, '.mat'], 'HMM', '-mat');
 end
+
+% testData = [];
+% fileName = dir([dir_test, filesep, '*.mfcc']);
+% for iMfcc = 1:length(fileName)
+%     testData = dlmread([dir_test, filesep, fileName(iMfcc).name]);
+
+%     disp(loglikHMM(HMM, testData));
+% end
 
 
 
