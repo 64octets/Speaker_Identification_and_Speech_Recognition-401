@@ -20,7 +20,7 @@ for s = 1:length(trainD)
             phnDataLine = phnData{iPhn};
             phnDataLine = regexp(phnDataLine,'\s+','split');
             endIndex = min(str2num(phnDataLine{2}) / 128, length(mfccData));
-            pnn = phnDataLine{3};
+            pnn = genvarname(phnDataLine{3});
             if ~isfield(trainingData, pnn)
                 trainingData.(pnn) = [];
             end
