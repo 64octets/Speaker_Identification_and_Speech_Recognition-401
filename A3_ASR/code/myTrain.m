@@ -24,7 +24,8 @@ for s = 1:length(trainD)
             if ~isfield(trainingData, pnn)
                 trainingData.(pnn) = [];
             end
-            trainingData.(pnn) = [trainingData.(pnn), transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :))];
+            len = length(trainingData.(pnn));
+            trainingData.(pnn){len + 1} = transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :));
         end
     end
 end
