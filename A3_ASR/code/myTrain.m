@@ -28,15 +28,17 @@ for s = 1:length(trainD)
 end
 
 HMM = initHMM(trainingData);
-[HMM, L] = trainHMM(HMM, trainingData);
+[HMM, L] = trainHMM(HMM, trainingData, 5);
 
-% testData = [];
-% fileName = dir([dir_test, filesep, '*.mfcc']);
-% for iMfcc = 1:length(fileName)
-%     testData = dlmread([dir_test, filesep, fileName(iMfcc).name]);
+save( 'HMM.mat', 'HMM', '-mat');
 
-%     disp(loglikHMM(HMM, testData));
-% end
+testData = [];
+fileName = dir([dir_test, filesep, '*.mfcc']);
+for iMfcc = 1:length(fileName)
+    testData = dlmread([dir_test, filesep, fileName(iMfcc).name]);
+
+    disp(loglikHMM(HMM, testData));
+end
 
 
 
