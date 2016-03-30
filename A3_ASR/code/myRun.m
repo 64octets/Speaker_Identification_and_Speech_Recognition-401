@@ -23,7 +23,7 @@ for phnfile = 1:length(phnfiles)
         phns = fieldnames(HMMs);
         for i = 1:length(phns)
             phn = phns{i};
-            logProb = loglikHMM(Hmms.(phn), testMfcc);
+            logProb = loglikHMM(HMMs.(phn), testMfcc);
             if logProb > maxLogProb
                 maxLogProb = logProb;
                 mostProbPhn = phn;
