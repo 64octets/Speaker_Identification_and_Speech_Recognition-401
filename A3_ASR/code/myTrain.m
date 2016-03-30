@@ -31,20 +31,11 @@ for s = 1:length(trainD)
 end
 
 pnns = fieldnames(trainingData);
+HMMs = struct();
 for i = 1:length(pnns)
     pnn = pnns{i};
     HMM = initHMM(trainingData.(pnn));
     [HMM, L] = trainHMM(HMM, trainingData.(pnn), 5);
-    save( ['HMM_', pnn, '.mat'], 'HMM', '-mat');
+    HMMs.(pnn) = HMM;
 end
-
-% testData = [];
-% fileName = dir([dir_test, filesep, '*.mfcc']);
-% for iMfcc = 1:length(fileName)
-%     testData = dlmread([dir_test, filesep, fileName(iMfcc).name]);
-
-%     disp(loglikHMM(HMM, testData));
-% end
-
-
-
+save( ['HMMs.mat'], 'HMMs', '-mat');
