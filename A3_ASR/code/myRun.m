@@ -29,6 +29,7 @@ for phnfile = 1:length(phnfiles)
                 mostProbPhn = phn;
             end
         end
+        disp(['Expected Phn: ', realPhn, ', Actual Phn: ', mostProbPhn]);
         correctCount = correctCount + strcmp(mostProbPhn, realPhn);
     end
 end
