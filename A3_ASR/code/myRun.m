@@ -18,7 +18,7 @@ for phnfile = 1:length(phnfiles)
         realPhn = genvarname(phnDataLine{3});
         testMfcc = transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :));
 
-        maxLogProb = 0;
+        maxLogProb = -Inf;
         mostProbPhn = '';
         phns = fieldnames(HMMs);
         for i = 1:length(phns)
