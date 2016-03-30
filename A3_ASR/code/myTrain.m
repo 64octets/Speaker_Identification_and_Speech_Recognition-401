@@ -1,8 +1,6 @@
 addpath(genpath('/u/cs401/A3_ASR/code/FullBNT-1.0.4'));
 
 dir_train = '/u/cs401/speechdata/Training';
-% dir_train = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
-dir_test = '/u/cs401/speechdata/Testing';
 
 trainingData = struct();
 trainD = dir(dir_train);
@@ -20,22 +18,22 @@ for s = 1:length(trainD)
             phnDataLine = phnData{iPhn};
             phnDataLine = regexp(phnDataLine,'\s+','split');
             endIndex = min(str2num(phnDataLine{2}) / 128, length(mfccData));
-            pnn = genvarname(phnDataLine{3});
-            if ~isfield(trainingData, pnn)
-                trainingData.(pnn) = [];
+            phn = genvarname(phnDataLine{3});
+            if ~isfield(trainingData, phn)
+                trainingData.(phn) = [];
             end
-            len = length(trainingData.(pnn));
-            trainingData.(pnn){len + 1} = transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :));
+            len = length(trainingData.(phn));
+            trainingData.(phn){len + 1} = transpose(mfccData((str2num(phnDataLine{1}) / 128) + 1: endIndex, :));
         end
     end
 end
 
-pnns = fieldnames(trainingData);
+phns = fieldnames(trainingData);
 HMMs = struct();
-for i = 1:length(pnns)
-    pnn = pnns{i};
-    HMM = initHMM(trainingData.(pnn));
-    [HMM, L] = trainHMM(HMM, trainingData.(pnn), 5);
-    HMMs.(pnn) = HMM;
+for i = 1:length(phns)
+    phn = phns{i};
+    HMM = initHMM(trainingData.(phn));
+    [HMM, L] = trainHMM(HMM, trainingData.(phn), 5);
+    HMMs.(phn) = HMM;
 end
 save( ['HMMs.mat'], 'HMMs', '-mat');
