@@ -25,10 +25,14 @@ for phnfile = 1:length(phnfiles)
         phns = fieldnames(HMMs);
         for i = 1:length(phns)
             phn = phns{i};
-            logProb = loglikHMM(HMMs.(phn), testMfcc);
-            if logProb > maxLogProb
-                maxLogProb = logProb;
-                mostProbPhn = phn;
+            try
+                logProb = loglikHMM(HMMs.(phn), testMfcc);
+                if logProb > maxLogProb
+                    maxLogProb = logProb;
+                    mostProbPhn = phn;
+                end
+            catch
+                warning('Error using function loglikHMM.');
             end
         end
         disp(['Expected Phn: ', realPhn, ', Actual Phn: ', mostProbPhn]);
