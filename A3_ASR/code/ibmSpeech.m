@@ -8,7 +8,7 @@ for i = 1:length(flacfiles)
     disp(result);
     result = regexp(result, '"transcript": "(?<transcript>[\w|\s]+)"', 'names');
     disp(result);
-    result = result.transcript;
+    result = strtrim(result.transcript);
 
     fprintf(output, [result, '\n']);
 end
