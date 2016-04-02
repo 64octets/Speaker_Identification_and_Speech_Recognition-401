@@ -36,6 +36,6 @@ for i = 1:length(mfccs)
     end
     for m = 1:5
         person = probs{m};
-        disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.speakerName, ' and probability is ', person.prob]);
+        disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', person.prob]);
     end
 end
