@@ -41,7 +41,7 @@ for i = 1:length(txtFiles)
         voice = 'en-US_MichaelVoice';
     end
     tempFlac = ['syn_unkn_', num2str(i), '.flac'];
-    unix(['env LD_LIBRARY_PATH='''' curl -u f68e017a-2b5e-47ce-8b4d-8d108e75cbe8:S5QhBuRF3quy -X POST --header "Content-Type: application/json" --header "Accept: audio/flac" --data "{\"text\":\"' text, '\"}" "https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?voice=', voice, '" > ', tempFlac]);
+    unix(['env LD_LIBRARY_PATH='''' curl -u f68e017a-2b5e-47ce-8b4d-8d108e75cbe8:S5QhBuRF3quy -X POST --header "Content-Type: application/json" --header "Accept: audio/flac" --data "{"text":"' text, '"}" "https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?voice=', voice, '" > ', tempFlac]);
     % disp(['env LD_LIBRARY_PATH='''' curl -u da15a506-7899-46cf-9929-73f9f566b29d:GkNQhyD4g03H -X POST --header "Content-Type: audio/flac" --header "Transfer-Encoding: chunked" --data-binary @', tempFlac, ' "https://stream.watsonplatform.net/speech-to-text/api/v1/recognize?continuous=true"']);
     [status, result] = unix(['env LD_LIBRARY_PATH='''' curl -u da15a506-7899-46cf-9929-73f9f566b29d:GkNQhyD4g03H -X POST --header "Content-Type: audio/flac" --header "Transfer-Encoding: chunked" --data-binary @', tempFlac, ' "https://stream.watsonplatform.net/speech-to-text/api/v1/recognize?continuous=true"']);
     disp(result);
