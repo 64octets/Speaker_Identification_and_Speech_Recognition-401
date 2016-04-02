@@ -11,6 +11,7 @@ D = 14;
 M = 10;
 
 for i = 1:length(mfccs)
+    output = fopen([strtok(mfccs(i).name, '.'), '.lik'], 'w');
     mfcc = dlmread([testPath, filesep, mfccs(i).name]);
     probs = [];
     for j = 1:length(gmms)
@@ -36,6 +37,7 @@ for i = 1:length(mfccs)
     end
     for m = 1:5
         person = probs{m};
-        disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
+        fprintf(output, ['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob), '\n']);
     end
+    fclose(output);
 end
