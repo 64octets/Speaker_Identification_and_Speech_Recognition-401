@@ -44,7 +44,7 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
 
                 if R(i, j) == del
                     R(i, j) = R(i - 1, j);
-                elseif
+                elseif R(i, j) == ins
                     R(i, j) = R(i, j - 1);
                 else
                     R(i, j) = R(i - 1, j - 1);
