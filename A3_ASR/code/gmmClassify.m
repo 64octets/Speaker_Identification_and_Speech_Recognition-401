@@ -1,7 +1,9 @@
 trainPath = '/u/cs401/speechdata/Training';
 % trainPath = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
-gmms = gmmTrain(trainPath, 100, 0.01, 10);
+% gmms = gmmTrain(trainPath, 100, 0.01, 10);
 save( ['gmms.mat'], 'gmms', '-mat');
+gmms = load('gmms.mat', '-mat');
+gmms = gmms.gmms;
 
 testPath = '/u/cs401/speechdata/Testing';
 mfccs = dir([testPath, filesep, '*.mfcc']);
