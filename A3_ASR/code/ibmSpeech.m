@@ -25,7 +25,7 @@ if exist('syn.txt', 'file') == 2
 end
 outputName = 'syn.txt';
 outFile = fopen(outputName, 'w');
-txtFiles = dir([dir_test, filesep, '*.txt']);
+txtFiles = dir([dir_test, filesep, 'unkn_*.txt']);
 for i = 1:length(txtFiles)
     disp(['file name: ', dir_test, filesep, 'unkn_', num2str(i), '.txt']);
     txtFile = textread([dir_test, filesep, 'unkn_', num2str(i), '.txt'], '%s');
