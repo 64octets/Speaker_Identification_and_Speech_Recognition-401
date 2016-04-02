@@ -1,4 +1,4 @@
-% dir_test = '/u/cs401/speechdata/Testing';
+dir_test = '/u/cs401/speechdata/Testing';
 
 % output = fopen('hypo.txt','w');
 
