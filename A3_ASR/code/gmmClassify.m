@@ -10,10 +10,16 @@ M = 10;
 for i = 1:length(mfccs)
     mfcc = dlmread([testPath, filesep, mfccs(i).name]);
     probs = [];
+    mostLogProb = -Inf;
+    mostProbSpeaker = '';
     for j = 1:length(gmms)
         speakerGmm = gmms{j};
         speakerName = speakerGmm.name;
         [p, L] = computeLikelihood(mfcc, speakerGmm, D, M);
-        disp(L);
+        if L > mostLogProb
+            mostLogProb = L;
+            mostProbSpeaker = speakerName;
+        end
+        disp(['For file ', mfccs(i).name, ', the most possible speaker is ', mostProbSpeaker]);
     end
 end
