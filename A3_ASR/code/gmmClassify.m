@@ -28,7 +28,7 @@ for i = 1:length(mfccs)
         for n = m + 1:length(probs)
             a = probs{m};
             b = probs{n};
-            if a.prob < b.prob
+            if a.prob < b.prob || isnan(a.prob)
                 c = a;
                 probs{m} = b;
                 probs{n} = c;
