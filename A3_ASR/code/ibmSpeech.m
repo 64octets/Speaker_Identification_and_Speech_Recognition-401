@@ -27,6 +27,7 @@ outputName = 'syn.txt';
 outFile = fopen(outputName, 'w');
 txtFiles = dir([dir_test, filesep, '*.txt']);
 for i = 1:length(txtFiles)
+    disp(['file name: ', dir_test, filesep, 'unkn_', num2str(i), '.txt']);
     txtFile = textread([dir_test, filesep, 'unkn_', num2str(i), '.txt'], '%s');
     text = '';
     for j = 3:length(txtFile)
