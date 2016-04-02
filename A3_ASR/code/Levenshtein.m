@@ -56,6 +56,7 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
         IE{i} = ins / n;
         DE{i} = del / n;
         LEV_DIST{i} = R(n + 1, m + 1) / n;
+        disp(LEV_DIST);
     end
 end
 
