@@ -40,7 +40,7 @@ for i = 1:length(mfccs)
     disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
     for m = 1:5
         person = probs{m};
-        fprintf(output, ['For file ', mfccs(i).name, ', the ', num2str(m), 'th most possible speaker is ', person.name, ' and probability is ', num2str(person.prob), '\n']);
+        fprintf(output, [person.name, '\n']);
     end
     fclose(output);
 end
