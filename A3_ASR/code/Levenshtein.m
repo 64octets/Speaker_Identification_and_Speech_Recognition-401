@@ -16,10 +16,10 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
 
     hypoLines = textread(hypothesis, '%s','delimiter','\n');
 
-    for i = 1:length(hypoLines)
-        hypoLine = hypoLines{i};
+    for iHypoLines = 1:length(hypoLines)
+        hypoLine = hypoLines{iHypoLines};
         hypoWords = strsplit(strtrim(hypoLine));
-        refWords = transpose(textread([annotation_dir, filesep, 'unkn_', num2str(i), '.txt'], '%s'));
+        refWords = transpose(textread([annotation_dir, filesep, 'unkn_', num2str(iHypoLines), '.txt'], '%s'));
 
         del = 0;
         sub = 0;
@@ -43,16 +43,10 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
             end
         end
 
-        disp(sub);
-        disp(ins);
-        disp(del);
-        disp(R(n + 1, m + 1));
-        disp('\n\n');
-        SE{i} = sub / n;
-        IE{i} = ins / n;
-        DE{i} = del / n;
-        LEV_DIST{i} = R(n + 1, m + 1) / n;
-        disp(R);
+        SE{iHypoLines} = sub / n;
+        IE{iHypoLines} = ins / n;
+        DE{iHypoLines} = del / n;
+        LEV_DIST{iHypoLines} = R(n + 1, m + 1) / n;
     end
 end
 
