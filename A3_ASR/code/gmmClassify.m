@@ -1,9 +1,9 @@
 trainPath = '/u/cs401/speechdata/Training';
 % trainPath = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
-gmms = gmmTrain(trainPath, 100, 0.01, 10);
-save( ['gmms.mat'], 'gmms', '-mat');
-% gmms = load('gmms.mat', '-mat');
-% gmms = gmms.gmms;
+% gmms = gmmTrain(trainPath, 100, 0.01, 10);
+% save( ['gmms.mat'], 'gmms', '-mat');
+gmms = load('gmms.mat', '-mat');
+gmms = gmms.gmms;
 
 testPath = '/u/cs401/speechdata/Testing';
 mfccs = dir([testPath, filesep, '*.mfcc']);
@@ -35,9 +35,12 @@ for i = 1:length(mfccs)
             end
         end
     end
+
+    person = probs{1};
+    disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob), '\n']);
     for m = 1:5
         person = probs{m};
-        fprintf(output, ['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob), '\n']);
+        fprintf(output, ['For file ', mfccs(i).name, ', the ', num2str(m), 'th most possible speaker is ', person.name, ' and probability is ', num2str(person.prob), '\n']);
     end
     fclose(output);
 end
