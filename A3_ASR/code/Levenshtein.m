@@ -36,7 +36,7 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
         for i = 2: n + 1
             for j = 2: m + 1
                 del = R(i - 1, j) + 1;
-                sub = R(i - 1, j - 1) + (~strcmp(refWords{i + 1}, hypoWords{j - 1}));
+                sub = R(i - 1, j - 1) + (~strcmp(upper(refWords{i + 1}), upper(hypoWords{j - 1})));
                 ins = R(i, j - 1) + 1;
                 R(i, j) = min(del, sub);
                 R(i, j) = min(R(i, j), ins);
@@ -47,7 +47,7 @@ function [SE IE DE LEV_DIST] = Levenshtein(hypothesis,annotation_dir)
         disp(ins);
         disp(del);
         disp(R(n + 1, m + 1));
-        disp('\n\n')
+        disp('\n\n');
         SE{i} = sub / n;
         IE{i} = ins / n;
         DE{i} = del / n;
