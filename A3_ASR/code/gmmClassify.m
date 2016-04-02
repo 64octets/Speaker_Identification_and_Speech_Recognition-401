@@ -20,6 +20,6 @@ for i = 1:length(mfccs)
             mostLogProb = L;
             mostProbSpeaker = speakerName;
         end
-        disp(['For file ', mfccs(i).name, ', the most possible speaker is ', mostProbSpeaker]);
     end
+    disp(['For file ', mfccs(i).name, ', the most possible speaker is ', mostProbSpeaker]);
 end
