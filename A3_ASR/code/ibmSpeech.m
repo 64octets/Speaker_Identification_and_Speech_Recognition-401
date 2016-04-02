@@ -30,13 +30,13 @@ for i = 1:length(txtFiles)
     txtFile = textread([dir_test, filesep, 'unkn_', num2str(i), '.txt'], '%s');
     text = '';
     for j = 3:length(txtFile)
-        text = [text, txtFile(j), ' '];
+        text = [text, txtFile{j}, ' '];
     end
     text = strtrim(text);
     disp(text);
 
     likFile = ['unkn_', num2str(i), '.lik'];
-    likFile = textread(likFile, '%s')
+    likFile = textread(likFile, '%s');
     voice = 'en-US_LisaVoice';
     if strncmpi(likFile(1), 'M', 1)
         voice = 'en-US_MichaelVoice';
