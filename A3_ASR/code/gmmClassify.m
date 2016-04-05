@@ -48,6 +48,11 @@ for i = 1:length(mfccs)
         fprintf(output, [person.name, '\n']);
     end
     fclose(output);
-    person = probs{1};
-    correct_count = correct_count + (~isempty(findstr(target_file{i}, person.name)));
+    if i <= 15
+        person = probs{1};
+        correct_count = correct_count + (~isempty(findstr(target_file{i + 1}, person.name)));
+    end
 end
+
+disp(['Accuracy for the first 15 mfcc files is ', num2str(correct_count / 15)]);
+
