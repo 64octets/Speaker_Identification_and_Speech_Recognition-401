@@ -3,18 +3,21 @@ trainPath = '/u/cs401/speechdata/Training';
 max_iter = 100;
 M = 20
 
-gmms = gmmTrain(trainPath, max_iter, 0.01, M);
-save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
-% gmms = load('gmms.mat', '-mat');
-% gmms = gmms.gmms;
+% gmms = gmmTrain(trainPath, max_iter, 0.01, M);
+% save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
+gmms = load('gmms.mat', '-mat');
+gmms = gmms.gmms;
 
 testPath = '/u/cs401/speechdata/Testing';
 mfccs = dir([testPath, filesep, '*.mfcc']);
 D = 14;
 
+correct_count = 0;
+target_file = textread([dir_test, filesep, phnFileName], '%s','delimiter','\n');
+
 for i = 1:length(mfccs)
-    output = fopen([strtok(mfccs(i).name, '.'), '.lik'], 'w');
-    mfcc = dlmread([testPath, filesep, mfccs(i).name]);
+    output = fopen(['unkn_', num2str(i), '.', '.lik'], 'w');
+    mfcc = dlmread([testPath, filesep, 'unkn_', num2str(i), '.mfcc']);
     probs = [];
     for j = 1:length(gmms)
         speakerGmm = gmms{j};
@@ -39,10 +42,11 @@ for i = 1:length(mfccs)
     end
 
     person = probs{1};
-    disp(['For file ', mfccs(i).name, ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
+    disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
     for m = 1:5
         person = probs{m};
         fprintf(output, [person.name, '\n']);
     end
     fclose(output);
+    correct_count = correct_count + (~isempty(findstr(target_file{i}, probs{1})));
 end
