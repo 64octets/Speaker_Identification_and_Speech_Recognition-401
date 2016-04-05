@@ -6,10 +6,10 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
         weightedSum = 0;
         for m = 1:M
             temp1 = 0;
-            temp2 = 1;
+            temp2 = det(gmm.cov);
             for d = 1:D
                 temp1 = temp1 + (((X(t, d) - gmm.means(d, m)) ^ 2) / gmm.cov(d, d, m));
-                temp2 = temp2 * gmm.cov(d, d, m);
+                % temp2 = temp2 * gmm.cov(d, d, m);
             end
             b(t, m) = exp(temp1 / (-2)) / (((2 * pi) ^ (D / 2)) * sqrt(abs(temp2)));
             weightedSum = weightedSum + gmm.weights(1, m) * b(t, m);
