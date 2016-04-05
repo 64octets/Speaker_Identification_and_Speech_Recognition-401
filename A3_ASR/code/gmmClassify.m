@@ -1,12 +1,12 @@
 trainPath = '/u/cs401/speechdata/Training';
 % trainPath = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
 max_iter = 100;
-M = 20;
+M = 10;
 
-% gmms = gmmTrain(trainPath, max_iter, 0.01, M);
-% save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
-gmms = load('gmms.mat', '-mat');
-gmms = gmms.gmms;
+gmms = gmmTrain(trainPath, max_iter, 0.01, M);
+save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
+% gmms = load('gmms.mat', '-mat');
+% gmms = gmms.gmms;
 
 testPath = '/u/cs401/speechdata/Testing';
 mfccs = dir([testPath, filesep, '*.mfcc']);
@@ -53,10 +53,7 @@ for i = 1:length(mfccs)
         person = probs{1};
         name = person.name;
         target_line = strsplit(target_file{i + 1}, ':');
-        target = strtrim(target_line{2})
-        disp(name);
-        disp(target);
-        disp('\n\n');
+        target = strtrim(target_line{2});
         person_correct_count = person_correct_count + (strcmp(target, name));
         gender_correct_cound = gender_correct_cound + (strcmp(target(1), name(1)));
     end
