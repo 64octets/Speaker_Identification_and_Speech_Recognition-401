@@ -1,7 +1,7 @@
 trainPath = '/u/cs401/speechdata/Training';
 % trainPath = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
 max_iter = 100;
-M = 20
+M = 20;
 
 % gmms = gmmTrain(trainPath, max_iter, 0.01, M);
 % save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
@@ -13,7 +13,7 @@ mfccs = dir([testPath, filesep, '*.mfcc']);
 D = 14;
 
 correct_count = 0;
-target_file = textread([dir_test, filesep, phnFileName], '%s','delimiter','\n');
+target_file = textread([testPath, filesep, phnFileName], '%s','delimiter','\n');
 
 for i = 1:length(mfccs)
     output = fopen(['unkn_', num2str(i), '.', '.lik'], 'w');
