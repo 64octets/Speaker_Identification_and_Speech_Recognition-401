@@ -13,7 +13,7 @@ mfccs = dir([testPath, filesep, '*.mfcc']);
 D = 14;
 
 correct_count = 0;
-target_file = textread([testPath, filesep, phnFileName], '%s','delimiter','\n');
+target_file = textread([testPath, filesep, 'TestingIDs1-15.txt'], '%s','delimiter','\n');
 
 for i = 1:length(mfccs)
     output = fopen(['unkn_', num2str(i), '.', '.lik'], 'w');
