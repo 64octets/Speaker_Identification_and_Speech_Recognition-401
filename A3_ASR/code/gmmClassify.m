@@ -41,6 +41,7 @@ for i = 1:length(mfccs)
             end
         end
     end
+    disp(probs);
 
     person = probs{1};
     disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and negative log probability is ', num2str(person.prob)]);
