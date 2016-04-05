@@ -42,11 +42,12 @@ for i = 1:length(mfccs)
     end
 
     person = probs{1};
-    disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
+    disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and negative log probability is ', num2str(person.prob)]);
     for m = 1:5
         person = probs{m};
         fprintf(output, [person.name, '\n']);
     end
     fclose(output);
-    correct_count = correct_count + (~isempty(findstr(target_file{i}, probs{1})));
+    person = probs{1};
+    correct_count = correct_count + (~isempty(findstr(target_file{i}, person.name)));
 end
