@@ -1,7 +1,7 @@
 trainPath = '/u/cs401/speechdata/Training';
 % trainPath = '/h/u8/g5/00/g5ran/Speech_Recognition_401/speechdata/Training';
 max_iter = 100;
-M = 10;
+M = 5;
 
 gmms = gmmTrain(trainPath, max_iter, 0.01, M);
 save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
