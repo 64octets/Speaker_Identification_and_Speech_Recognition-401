@@ -80,7 +80,7 @@ function gmm_init = gmmInit(name, D, M, X)
         gmm_init.weights(1, m) = 1 / M;
         for d = 1:D
             gmm_init.cov(d, d, m) = 1000;
-            gmm_init.means(d, m) = rand * X(m, d);
+            gmm_init.means(d, m) = rand * 100;
         end
     end
 end

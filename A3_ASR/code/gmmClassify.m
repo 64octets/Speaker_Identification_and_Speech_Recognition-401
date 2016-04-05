@@ -17,7 +17,7 @@ gender_correct_cound = 0;
 target_file = textread([testPath, filesep, 'TestingIDs1-15.txt'], '%s','delimiter','\n');
 
 for i = 1:length(mfccs)
-    output = fopen(['unkn_', num2str(i), '.', '.lik'], 'w');
+    output = fopen(['unkn_', num2str(i), '.lik'], 'w');
     mfcc = dlmread([testPath, filesep, 'unkn_', num2str(i), '.mfcc']);
     probs = [];
     for j = 1:length(gmms)
