@@ -2,8 +2,7 @@ addpath(genpath('/u/cs401/A3_ASR/code/FullBNT-1.0.4'));
 
 dir_test = '/u/cs401/speechdata/Testing';
 
-HMMs = load('HMMs.mat', '-mat');
-HMMs = HMMs.HMMs;
+load HMMs;
 
 phnfiles = dir([dir_test, filesep, '*.phn']);
 totalCount = 0;
