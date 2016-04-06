@@ -11,7 +11,7 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
             %     temp1 = temp1 + (((X(t, d) - gmm.means(d, m)) ^ 2) / gmm.cov(d, d, m));
             %     temp2 = temp2 * gmm.cov(d, d, m);
             % end
-            diff_mean = X(t, :) - gmm.means(:, m);
+            diff_mean = X(t, :) - transpose(gmm.means(:, m));
             b(t, m) = exp((-1 / 2) * diff_mean * gmm.cov(:, :, m) * transpose(gmm.cov(:, :, m))) / ((2 * pi) ^ (D / 2) * sqrt(det(gmm.cov(:, :, m))));
 
             % b(t, m) = mvnpdf(X(t, :), gmm.means(:, m), gmm.cov(:, :, m));
