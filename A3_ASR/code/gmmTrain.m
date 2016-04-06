@@ -15,159 +15,65 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
 %                                          is a vector
 %                            gmm.cov     : DxDxM matrix of covariances. 
 %                                          (:,:,i) is for i^th mixture
-
-    speakers = dir([dir_train, filesep]);
-    speakers = speakers(3:end); % Skip . and ..
-    N = length(speakers);
-    
-    gmms = cell(1, N);
-    
-    for i=1:length(speakers)
-        utteranceDir = [dir_train, filesep, speakers(i).name, filesep];
-        utterances = dir([utteranceDir, '*.mfcc']);
-        
-        % Stack the line vectors for all utterances from one speaker
-        data = load([utteranceDir, filesep, utterances(1).name]);
-        for j=2:length(utterances)
-            utterance = utterances(j).name;
-            nextData = load([utteranceDir, filesep, utterance]);
-            
-            % data contains all mfcc data for all frames of all utterances
-            % for one specific speaker
-            data = [data; nextData];
+    gmms = [];
+    trainD = dir(dir_train);
+    n = 1;
+    for s = 1:length(trainD)
+        speaker = trainD(s).name;
+        if strcmp(speaker, '..') || strcmp(speaker, '.')
+            continue;
         end
-
-        % train an m-component GMM per speaker
-        theta = train(data, max_iter, epsilon, M);
-        
-        gmms{i}.name    = speakers(i).name;
-        gmms{i}.weights = theta.weights;
-        gmms{i}.means   = theta.means;
-        gmms{i}.cov     = theta.cov;
+        speakerD = dir([dir_train, filesep, speaker, filesep, '*.mfcc']);
+        X = [];
+        for mfcc = 1:length(speakerD)
+            X = [X; dlmread([dir_train, filesep, speaker, filesep, speakerD(mfcc).name])];
+        end
+        sizeX = size(X);
+        D = sizeX(2);
+        gmm = gmmInit(speaker, D, M, X);
+        prev_L = -Inf;
+        improvement = Inf;
+        for i = 1:max_iter
+            [p, L] = computeLikelihood(X, gmm, D, M);
+            if isnan(L) || isinf(L)
+                gmm = gmm_prev;
+                break;
+            end
+            gmm_prev = gmm;
+            gmm = updateParameters(gmm, X, p, D, M);
+            improvement = L - prev_L;
+            prev_L = L;
+            if improvement <= epsilon
+                break;
+            end
+        end
+        gmms{n} = gmm;
+        n = n + 1;
+        disp(['Finished training with speaker ', speaker]);
     end
 end
 
-
-function theta = train(X, max_iter, epsilon, M)
-    % Input: MFCC data X - T x D
-    
-    X_size = size(X);
-    T = X_size(1);
-    D = X_size(2);
-    
-    % Initialize theta
-    theta.weights = zeros(1, M) + 1 / M;
-    
-    random_init_vec = ceil(rand(1, M) * T);
-    theta.means = X(random_init_vec, :)';
-
-    theta.cov = zeros(D, D, M);
-    for j=1:M
-        theta.cov(:, :, j) = eye(D, D);
-    end
-    
-    % i := 0
-    i = 0;
-    
-    % prev L := -Inf ; improvement = -Inf
-    prev_L = -Inf;
-    improvement = -Inf;
-    
-    % while i =< MAX ITER and improvement >= epsilon do
-    while i < max_iter %&& improvement >= epsilon
-        disp(i)
-        
-    %   L := ComputeLikelihood (X, theta)
-        L = computeLikelihood(X, theta, M);
-        
-    %   theta := UpdateParameters (theta, X, L) ; improvement := L - prev_L
-        theta = updateParameters(theta, X, L, M);
-        
-        % Summing across a normalized axis will only give 1...
-        sum_L = sum(sum(L, 1), 2); % 1 x 1
-        disp(sum_L)
-        disp(T)
-        
-        improvement = sum_L - prev_L;
-        
-    %   prev L := L
-        prev_L = sum_L;
-        
-    %   i := i + 1 end
-        i = i + 1;
-    % end
+function gmm = updateParameters(gmm, X, p, D, M)
+    T = length(X);
+    for m = 1:M
+        sumCommon = sum(p(:, m));
+        gmm.weights(1, m) = sumCommon / T;
+        sumForMean = zeros(D, 1);
+        sumForVariance = zeros(D, D);
+        for t = 1:T
+            sumForMean = sumForMean + p(t, M) * transpose(X(t, :));
+            sumForVariance = sumForVariance + p(t, M) * transpose(X(t, :)) * X(t, :);
+        end
+        gmm.means(:, m) = sumForMean / sumCommon;
+        gmm.cov(:, :, m) = (sumForVariance / sumCommon) - gmm.means(:, m) * transpose(gmm.means(:, m));
     end
 end
 
-function L = computeLikelihood(X, theta, M)
-    % X: T x D
-    X_size = size(X);
-    T = X_size(1);
-    D = X_size(2);
-    
-    b = calculate_b(X, theta, M); % T x M
-    
-    sum_w_b = b * theta.weights'; % T x 1
-    rep_w = repmat(theta.weights, T, 1); % T x M
-    rep_sum_w_b = repmat(sum_w_b, 1, M); % T x M
-    
-    L = rep_w .* b ./ rep_sum_w_b; % T x M
-end
+function gmm_init = gmmInit(name, D, M, X)
+    gmm_init = struct();
 
-function theta = updateParameters(theta, X, L, M)
-    % X: T x D
-    % L: T x M
-    
-    X_size = size(X);
-    T = X_size(1);
-    D = X_size(2);
-
-    % Weights
-    sum_L = sum(L, 1); % 1 x M
-    theta.weights = sum_L ./ T;
-    
-    % Means    
-    rep_sum_L = repmat(sum_L, D, 1); % D x M
-    sum_L_X = X' * L; % D x M
-    theta.means = sum_L_X ./ rep_sum_L;
-    
-    % Variance
-    mu_squared = theta.means .* theta.means; % D x M
-    
-    X_squared = X .* X; % T x D
-    sum_L_X_squared = X_squared' * L; % D x M
-    
-    E_X_squared = sum_L_X_squared ./ rep_sum_L; % D x M
-    var = E_X_squared - mu_squared; % D x M
-    assert(0 == any(any(var < 0)))
-    for m=1:M
-        theta.cov(:, :, m) = diag(var(:, m));
-    end
-end
-
-function b = calculate_b(X, theta, M)
-    % X: T x D
-    X_size = size(X);
-    T = X_size(1);
-    D = X_size(2);
-    
-    b = zeros(T, M);
-    
-    for m=1:M
-        % Compute b per dimension
-        
-        mu_m = theta.means(:, m); % D x 1
-        rep_mu_m = repmat(mu_m.', T, 1); % T x D
-        
-        cov_m = diag(theta.cov(:, :, m)); % D x 1
-        rep_cov_m = repmat(cov_m.', T, 1); % T x D
-        
-        b_m_per_d = normpdf(X, rep_mu_m, rep_cov_m); % T x D 
-
-        % Since we assume dimensional independence, take product across
-        % all dimensions to get b.
-        b_m = prod(b_m_per_d, 2); % T x 1
-
-        b(:, m) = b_m;
-    end
+    gmm_init.name = name;
+    gmm_init.weights = zeros(1, M) + 1 / M;
+    gmm_init.cov = repmat(eye(D), 1, 1, M);
+    gmm_init.means = rand(D, M) * 100;
 end

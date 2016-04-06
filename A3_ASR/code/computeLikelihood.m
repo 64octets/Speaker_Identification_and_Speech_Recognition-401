@@ -21,7 +21,7 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
     L = 0;
     for t = 1:T
         for m = 1:M
-            L = L + p(t, m) * log(b(t, m));
+            L = L + log(p(t, m) * b(t, m));
         end
     end 
 end
