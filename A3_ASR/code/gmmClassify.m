@@ -1,7 +1,7 @@
 % trainPath = '/u/cs401/speechdata/Training';
 trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401/A3_ASR/data';
 max_iter = 100;
-M = 20;
+M = 50;
 
 gmms = gmmTrain(trainPath, max_iter, 0.001, M);
 save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
@@ -48,7 +48,7 @@ for i = 1:length(mfccs)
     end
 
     person = probs{1};
-    disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and negative log probability is ', num2str(person.prob)]);
+    disp(['For file ', 'unkn_', num2str(i), '.mfcc', ', the most possible speaker is ', person.name, ' and probability is ', num2str(person.prob)]);
     for m = 1:5
         person = probs{m};
         fprintf(output, [person.name, '\n']);
