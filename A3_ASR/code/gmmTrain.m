@@ -73,14 +73,7 @@ function gmm_init = gmmInit(name, D, M, X)
     gmm_init = struct();
 
     gmm_init.name = name;
-    gmm_init.weights = zeros(1, M);
-    gmm_init.cov = zeros(D, D, M);
-    gmm_init.means = zeros(D, M);
-    for m = 1:M
-        gmm_init.weights(1, m) = 1 / M;
-        for d = 1:D
-            gmm_init.cov(d, d, m) = 1000;
-            gmm_init.means(d, m) = rand * 100;
-        end
-    end
+    gmm_init.weights = zeros(1, M) + 1 / M;
+    gmm_init.cov = repmat(eye(D), M);
+    gmm_init.means = rand(D, M) * 100;
 end
