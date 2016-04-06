@@ -74,6 +74,6 @@ function gmm_init = gmmInit(name, D, M, X)
 
     gmm_init.name = name;
     gmm_init.weights = zeros(1, M) + 1 / M;
-    gmm_init.cov = repmat(eye(D), M);
+    gmm_init.cov = repmat(eye(D), 1, 1, M);
     gmm_init.means = rand(D, M) * 100;
 end
