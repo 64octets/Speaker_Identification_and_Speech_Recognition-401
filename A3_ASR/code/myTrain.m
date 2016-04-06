@@ -32,7 +32,7 @@ phns = fieldnames(trainingData);
 HMMs = struct();
 for i = 1:length(phns)
     phn = phns{i};
-    HMM = initHMM(trainingData.(phn), 16);
+    HMM = initHMM(trainingData.(phn), 4);
     [HMM, L] = trainHMM(HMM, trainingData.(phn), 5);
     HMMs.(phn) = HMM;
 end
