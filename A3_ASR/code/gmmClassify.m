@@ -3,7 +3,7 @@ trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401
 max_iter = 100;
 M = 50;
 
-gmms = gmmTrain(trainPath, max_iter, 0.001, M);
+gmms = gmmTrain(trainPath, max_iter, 0.0000001, M);
 save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
 % gmms = load('gmms.mat', '-mat');
 % gmms = gmms.gmms;

@@ -36,7 +36,7 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
         for i = 1:max_iter
             [p, L] = computeLikelihood(X, gmm, D, M);
             if isnan(L) || isinf(L)
-                gmm = gmm_prev;
+                disp('Exit unexpectedlly!');
                 break;
             end
             gmm_prev = gmm;
