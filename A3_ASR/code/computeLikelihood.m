@@ -19,7 +19,7 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
     end
     L = 1;
     for t = 1:T
-        sub_L = 0
+        sub_L = 0;
         for m = 1:M
             sub_L = sub_L + p(t, m) * b(t, m);
         end
