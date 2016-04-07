@@ -1,0 +1,185 @@
+Part 2
+Max Iteration, Epsilon, Number of Models
+
+1000, 0.001, 5
+Person accuracy for the first 15 mfcc files is 0.666667
+Gender accuracy for the first 15 mfcc files is 0.4
+
+1000, 0.001, 10
+Person accuracy for the first 15 mfcc files is 0.6
+Gender accuracy for the first 15 mfcc files is 0.666667
+
+1000, 0.001, 15
+Person accuracy for the first 15 mfcc files is 0.666667
+Gender accuracy for the first 15 mfcc files is 0.6
+
+1000, 0.001, 20
+Person accuracy for the first 15 mfcc files is 0.533333
+Gender accuracy for the first 15 mfcc files is 0.6
+
+1000, 0.001, 50
+Person accuracy for the first 15 mfcc files is 0.666667
+Gender accuracy for the first 15 mfcc files is 0.4
+
+1000, 0.001, 100
+Person accuracy for the first 15 mfcc files is 0.533333
+Gender accuracy for the first 15 mfcc files is 0.6
+
+
+------ Smaller Data (Only first 15 people) ------
+1000, 0.001, 5
+Person accuracy for the first 15 mfcc files is 0.533333
+Gender accuracy for the first 15 mfcc files is 0.4
+
+1000, 0.001, 10
+Person accuracy for the first 15 mfcc files is 0.733333
+Gender accuracy for the first 15 mfcc files is 0.866667
+
+1000, 0.001, 15
+Person accuracy for the first 15 mfcc files is 0.066667
+Gender accuracy for the first 15 mfcc files is 0.8
+
+1000, 0.001, 20
+Person accuracy for the first 15 mfcc files is 0.666667
+Gender accuracy for the first 15 mfcc files is 0.4
+
+1000, 0.001, 50
+Person accuracy for the first 15 mfcc files is 0.666667
+Gender accuracy for the first 15 mfcc files is 0.4
+
+1000, 0.001, 100
+Person accuracy for the first 15 mfcc files is 0.066667
+Gender accuracy for the first 15 mfcc files is 0.066667
+
+Above is the results we get from testing with different values of parameters. We are achieving the best accracy with number of models equal to 10 with the smaller traning data (only with the first people having results for test data). For both all training data and smaller data, we are having the best results with number of models around 10~15. Either more models or less models will result in less accuracy. Interestingly smaller training data is giving us a better accuracy than the whole training data. It could be explained as that we are only computing the accracy with first 15 speaker and then smaller training data just gives us a smaller set to guess from and therefore achieves higher correct rate.
+Similarly, we can also be conducting such experiments with epsilon and even number of dimension we will be looking at.
+
+To improve the classification accuracy, the first thing comes into mind is we can change to use K-means to initialize the Gaussian model instead of doing it randomlly and risking stucking into local maxima. Another thing that can be improved is that we are calculating the determinant for the covariance matrix assuming it's a diagonal matrix however is not true. 
+
+Currently, this classifier will just rank the probability of utterance coming from different speakers and choose the highest one. In order to enable it to decided none of the speakers in training data could be the one, we can simply set a confidence threshold. Then if none of the probabilities in the results is higher than this threshold, we conclude that it is not coming from any speaker in the training data.
+
+Other classifiers could also be doing speaker identification. For example, Hidden Markov Models, Neural Networks and Decision Trees could all be good alternatives.
+
+Part 3
+
+M = 8, Q = 3, D = 14, Num of Training Data = 30
+Accuracy: 0.45438
+
+M = 4, Q = 3, D = 14, Num of Training Data = 30
+Accuracy: 0.44891
+
+M = 8, Q = 6, D = 14, Num of Training Data = 30
+Accuracy: 0.41058
+
+M = 4, Q = 6, D = 14, Num of Training Data = 30
+Accuracy: 0.40132
+
+M = 8, Q = 3, D = 7, Num of Training Data = 30
+Accuracy: 0.36213
+
+M = 4, Q = 3, D = 7, Num of Training Data = 30
+Accuracy: 0.35341
+
+M = 8, Q = 6, D = 7, Num of Training Data = 30
+Accuracy: 0.33491
+
+M = 4, Q = 6, D = 7, Num of Training Data = 30
+Accuracy: 0.34281
+
+M = 8, Q = 3, D = 14, Num of Training Data = 15
+Accuracy: 0.43862
+
+M = 4, Q = 3, D = 14, Num of Training Data = 15
+Accuracy: 0.42312
+
+M = 8, Q = 6, D = 14, Num of Training Data = 15
+Accuracy: 0.41199
+
+M = 4, Q = 6, D = 14, Num of Training Data = 15
+Accuracy: 0.40872
+
+M = 8, Q = 3, D = 7, Num of Training Data = 15
+Accuracy: 0.33152
+
+M = 4, Q = 3, D = 7, Num of Training Data = 15
+Accuracy: 0.32981
+
+M = 8, Q = 6, D = 7, Num of Training Data = 15
+Accuracy: 0.32632
+
+M = 4, Q = 6, D = 7, Num of Training Data = 15
+Accuracy: 0.31173
+
+Above is the result we get using different settings of parameters. As you can see, generally we are get better performance with bigger value of number of mixture per state, less number of states per sequence, more dimensions of data we are considering and bigger size of training data. Interesting thing is we are getting better results with smaller value of number of mixture per state. Possibly because with bigger value we are then just overfitting the training data.
+
+Par 4
+
+4.1 Followings are the transcripts we got from IBM BlueMix for all 30 test files and their corresponding word error rate
+
+Transcript                                                                                      Word Error Rate
+
+now here is truly a Marvel                                                                      0.1667
+captain features a muskrat and a tadpole                                                        0.3750
+just let me die in peace                                                                        0.1667
+the sculptor looked at him bug eyed and amazed angry                                            0.5556
+flash live in the trees as a cricket ball twig in several directions                            0.5385
+this is particularly true in site selection                                                     0.1429
+we would lose our export markets and deny ourselves imports we need                             0.1538
+continental have teaspoons of soy sauce that you add                                            0.7000
+finally he asked do you object to petting                                                       0.2500
+try every other line first then fill in the interior                                            0.4000
+change involves the displacement of femme                                                       0.1667
+to his puzzlement there suddenly was no Hayes                                                   0.2500
+don't ask me to carry read like that                                                            0.4000
+full moon shone brightly that night                                                             0.4286
+tug boats a capable of hauling huge loads                                                       0.5714
+did dad do academic betting                                                                     0.2000
+she had your dark suit increase you wash water all year                                         0.2727
+the thick el virus was nearly overwhelmed by Dutch elm disease                                  0.2727
+cop number of teaspoons of soy sauce that you had                                               0.5000
+waging sweaters are made of lambs will                                                          0.4286
+we think differently                                                                            0.3333
+a toothpaste tube should be squeezed from the bottom                                            0.1111
+ran away a black knight with a lawful wedded man                                                0.2727
+don't ask me to carry an oily rag like that                                                     0.1000
+town asked me to carry an oily rag like that                                                    0.3000
+index words and electronic switches may be reserved in the following ways                       0.0833
+yeah avalanche triggered a minor earthquake                                                     0.3333
+don't ask me to carry an oily rag like that                                                     0.1000
+the thick and Forrest was nearly overwhelmed by Dutch elm disease                               0.2727
+when all else fails use force                                                                   0.3333
+
+4.2 Followings are the transcripts for part 4.3 for all 30 test files and their corresponding word error rate
+
+now here is truly a Marvel                                                                      0.1667
+the cartoon features the muskrat and tadpole                                                    0.3750
+just let me die in peace                                                                        0.1667
+the sculptor looked at him Eugene amazed angry                                                  0.5556
+a flash illumined the trees is a cricket ball twig in several directions                        0.3846
+this is particularly true in site selection                                                     0.1429
+we would lose our export markets and deny ourselves the imports we need                         0.0769
+count the number of teaspoons of soy sauce that you add                                         0.3000
+finally he asked do you object to patting                                                       0.2500
+draw every other line first then fill in the interior                                           0.3000
+change involves the displacement of forum                                                       0.1667
+to his puzzlement there suddenly was no Hayes                                                   0.2500
+Dante asked me to carry an oily rag like that                                                   0.3000
+a full moon shone brightly that night                                                           0.2857
+tug boats are capable of hauling huge loads                                                     0.4286
+the dead do academic bidding                                                                    0.6000
+she had your dark suit in greasy wash water all year                                            0.0909
+the thick around forest was nearly overwhelmed by Dutch elm disease                             0.1818
+count the number of teaspoons of soy sauce that you add                                         0.3000
+Norwegian sweaters are made of lamb's wool                                                      0.1429
+we think differently                                                                            0.3333
+a toothpaste tube should be squeezed from the bottom                                            0.1111
+ran away on a black knight with a lawful wedded man                                             0.1818
+Dante asked me to carry an oily rag like that                                                   0.3000
+Dante asked me to carry an oily rag like that                                                   0.3000
+index words and electronic switches may be reserved in the following ways                       0.0833
+the avalanche triggered a minor earthquake                                                      0.1667
+Dante asked me to carry an oily rag like that                                                   0.3000
+the thick around forest was nearly overwhelmed by Dutch elm disease                             0.1818
+when all else fails use force                                                                   0.3333
+
+As we can see the results above, we have got 14/30 sentences actually having the same word error rate for the orthographies of original utterances and synthesized utterances. And for the pairs with same error rate, it's not necessary that the texts are identical. Usually, they would still alter by one or two words or the order of words could be a little bit different. One interesting thing noticed from tests is that some differences are actually caused by choice of words even though both have the same meaning and pronounciation, for example "petting" v.s. "patting" in the 9th sentence. Overall, the word error rate seems to be reasonable and the synthesis process doesn't seem to lose much accuracy but in fact, synthesized utterances are having even lower error rate in some test cases.

@@ -4,7 +4,10 @@ dir_train = '/u/cs401/speechdata/Training';
 
 trainingData = struct();
 trainD = dir(dir_train);
-for s = 1:length(trainD)
+numOfTrain = length(trainD);
+% numOfTrain = length(trainD) / 2;
+
+for s = 1:numOfTrain
     folderName = trainD(s).name;
     if strcmp(folderName, '..') || strcmp(folderName, '.')
         continue;
