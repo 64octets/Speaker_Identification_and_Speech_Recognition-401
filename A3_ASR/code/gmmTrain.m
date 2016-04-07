@@ -42,7 +42,7 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
             gmm_prev = gmm;
             gmm = updateParameters(gmm, X, p, D, M);
             improvement = L - prev_L;
-            disp(['improvments: ', num2str(improvement)]);
+            disp(['For iteration ', num2str(i), ', improvment: ', num2str(improvement)]);
             prev_L = L;
             if improvement <= epsilon
                 disp('Convergence hit!');
