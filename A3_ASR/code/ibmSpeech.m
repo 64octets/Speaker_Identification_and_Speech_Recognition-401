@@ -35,7 +35,7 @@ for i = 1:length(txtFiles)
     text = strrep(text, '''', '''''');
 
     likFile = ['unkn_', num2str(i), '.lik'];
-    likFile = textread(likFile, '%s');
+    likFile = textread(likFile, '%s')
     voice = 'en-US_LisaVoice';
     if strncmpi(likFile(1), 'M', 1)
         voice = 'en-US_MichaelVoice';
@@ -46,7 +46,6 @@ for i = 1:length(txtFiles)
     result = regexp(result, '"transcript": "(?<transcript>.+)"\n', 'names');
     result = result.transcript
     fprintf(outFile, [result, '\n']);
-
 end
 
 fclose(outFile);
