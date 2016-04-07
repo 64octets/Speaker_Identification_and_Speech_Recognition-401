@@ -61,8 +61,8 @@ function gmm = updateParameters(gmm, X, p, D, M)
         sumForMean = zeros(D, 1);
         sumForVariance = zeros(D, D);
         for t = 1:T
-            sumForMean = sumForMean + p(t, M) * transpose(X(t, :));
-            sumForVariance = sumForVariance + p(t, M) * transpose(X(t, :)) * X(t, :);
+            sumForMean = sumForMean + p(t, m) * transpose(X(t, :));
+            sumForVariance = sumForVariance + p(t, m) * transpose(X(t, :)) * X(t, :);
         end
         gmm.means(:, m) = sumForMean / sumCommon;
         gmm.cov(:, :, m) = (sumForVariance / sumCommon) - gmm.means(:, m) * transpose(gmm.means(:, m));
