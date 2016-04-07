@@ -6,7 +6,11 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
         weightedSum = 0;
         for m = 1:M
             diff_mean = X(t, :) - transpose(gmm.means(:, m));
-            b(t, m) = exp((-1 / 2) * diff_mean * gmm.cov(:, :, m) * transpose(diff_mean)) / ((2 * pi) ^ (D / 2) * sqrt(det(gmm.cov(:, :, m))));
+            deter = 1;
+            for d = 1:D
+                deter = deter * gmm.cov(d, d, m);
+            end
+            b(t, m) = exp((-1 / 2) * diff_mean * gmm.cov(:, :, m) * transpose(diff_mean)) / ((2 * pi) ^ (D / 2) * sqrt(deter));
             weightedSum = weightedSum + gmm.weights(1, m) * b(t, m);
         end
         for m = 1:M
