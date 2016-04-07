@@ -8,7 +8,7 @@ for i = 1:length(flacfiles)
     [status, result] = unix(['env LD_LIBRARY_PATH='''' curl -u da15a506-7899-46cf-9929-73f9f566b29d:GkNQhyD4g03H -X POST --header "Content-Type: audio/flac" --header "Transfer-Encoding: chunked" --data-binary @', fileName, ' "https://stream.watsonplatform.net/speech-to-text/api/v1/recognize?continuous=true"']);
     disp(result);
     result = regexp(result, '"transcript": "(?<transcript>.+)"\n', 'names');
-    disp(result.transcript);
+    result.transcript
     result = strtrim(result.transcript);
 
     fprintf(output, [result, '\n']);
