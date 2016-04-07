@@ -44,6 +44,7 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
             improvement = L - prev_L;
             prev_L = L;
             if improvement <= epsilon
+                disp('Convergence hit!');
                 break;
             end
         end
