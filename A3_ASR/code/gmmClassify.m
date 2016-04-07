@@ -1,5 +1,3 @@
-addpath(genpath('/u/cs401/A3_ASR/code/FullBNT-1.0.4'));
-
 % trainPath = '/u/cs401/speechdata/Training';
 trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401/A3_ASR/data';
 max_iter = 1000;

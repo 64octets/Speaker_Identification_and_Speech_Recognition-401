@@ -5,6 +5,7 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
     for t = 1:T
         weightedSum = 0;
         for m = 1:M
+            diff_mean = X(t, :) - transpose(gmm.means(:, m));
             deter = 1;
             for d = 1:D
                 deter = deter * gmm.cov(d, d, m);

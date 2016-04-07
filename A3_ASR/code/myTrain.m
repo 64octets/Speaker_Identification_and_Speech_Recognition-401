@@ -1,3 +1,5 @@
+addpath(genpath('/u/cs401/A3_ASR/code/FullBNT-1.0.4'));
+
 dir_train = '/u/cs401/speechdata/Training';
 
 trainingData = struct();
