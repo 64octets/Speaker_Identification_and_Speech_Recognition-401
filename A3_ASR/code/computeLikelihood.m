@@ -10,7 +10,7 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
             for d = 1:D
                 deter = deter * gmm.cov(d, d, m);
             end
-            b(t, m) = exp((-1 / 2) * diff_mean * gmm.cov(:, :, m) * transpose(diff_mean)) / ((2 * pi) ^ (D / 2) * sqrt(abs(deter)));
+            b(t, m) = exp((-1 / 2) * diff_mean * inv(gmm.cov(:, :, m)) * transpose(diff_mean)) / ((2 * pi) ^ (D / 2) * sqrt(abs(deter)));
             weightedSum = weightedSum + gmm.weights(1, m) * b(t, m);
         end
         for m = 1:M
