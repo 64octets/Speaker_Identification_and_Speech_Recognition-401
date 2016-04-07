@@ -17,10 +17,12 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
             p(t, m) = (gmm.weights(1, m) * b(t, m)) / weightedSum;
         end
     end
-    L = 0;
+    L = 1;
     for t = 1:T
+        sub_L = 0
         for m = 1:M
-            L = L + p(t, m) * b(t, m);
+            sub_L = sub_L + p(t, m) * b(t, m);
         end
+        L = L * sub_L;
     end 
 end
