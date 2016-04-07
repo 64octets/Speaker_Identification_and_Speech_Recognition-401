@@ -34,7 +34,7 @@ for i = 1:length(txtFiles)
     text = strtrim(text);
     text = strrep(text, '''', '''''');
 
-    likFile = ['unkn_', num2str(i), '.lik'];
+    likFile = ['unkn_', num2str(i), '.lik']
     likFile = textread(likFile, '%s')
     voice = 'en-US_LisaVoice';
     if strncmpi(likFile(1), 'M', 1)
