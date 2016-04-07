@@ -5,12 +5,13 @@ function [p, L] = computeLikelihood(X, gmm, D, M)
     for t = 1:T
         weightedSum = 0;
         for m = 1:M
-            diff_mean = X(t, :) - transpose(gmm.means(:, m));
             deter = 1;
+            sum = 0;
             for d = 1:D
+                sum = sum - 0.5 * ((X(t, d) - gmm.means(d, m)) ^ 2) * (1 / gmm.cov(d, d, m));
                 deter = deter * gmm.cov(d, d, m);
             end
-            b(t, m) = exp((-1 / 2) * diff_mean * inv(gmm.cov(:, :, m)) * transpose(diff_mean)) / ((2 * pi) ^ (D / 2) * sqrt(abs(deter)));
+            b(t, m) = exp(sum) / ((2 * pi) ^ (D / 2) * sqrt(abs(deter)));
             weightedSum = weightedSum + gmm.weights(1, m) * b(t, m);
         end
         for m = 1:M
