@@ -61,7 +61,7 @@ for i = 1:length(mfccs)
         disp(target);
         disp(name);
         person_correct_count = person_correct_count + (strcmp(target, name));
-        gender_correct_cound = gender_correct_cound + (strcmp(target(1), name(1)));
+        gender_correct_cound = gender_correct_cound + (strcmp(target{1}(1), name(1)));
     end
 end
 
