@@ -1,57 +1,42 @@
 Part 2
 Max Iteration, Epsilon, Number of Models
 
-1000, 0.001, 5
-Person accuracy for the first 15 mfcc files is 0.666667
-Gender accuracy for the first 15 mfcc files is 0.4
+10, 500, 2
+Person accuracy for the first 15 mfcc files is 0.53333
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 10
-Person accuracy for the first 15 mfcc files is 0.6
-Gender accuracy for the first 15 mfcc files is 0.666667
+10, 500, 5
+Person accuracy for the first 15 mfcc files is 0.93333
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 15
-Person accuracy for the first 15 mfcc files is 0.666667
-Gender accuracy for the first 15 mfcc files is 0.6
+10, 500, 15
+Person accuracy for the first 15 mfcc files is 0.86667
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 20
-Person accuracy for the first 15 mfcc files is 0.533333
-Gender accuracy for the first 15 mfcc files is 0.6
-
-1000, 0.001, 50
-Person accuracy for the first 15 mfcc files is 0.666667
-Gender accuracy for the first 15 mfcc files is 0.4
-
-1000, 0.001, 100
-Person accuracy for the first 15 mfcc files is 0.533333
-Gender accuracy for the first 15 mfcc files is 0.6
+10, 500, 30
+Person accuracy for the first 15 mfcc files is 0.86667
+Gender accuracy for the first 15 mfcc files is 1
 
 
 ------ Smaller Data (Only first 15 people) ------
-1000, 0.001, 5
-Person accuracy for the first 15 mfcc files is 0.533333
-Gender accuracy for the first 15 mfcc files is 0.4
 
-1000, 0.001, 10
-Person accuracy for the first 15 mfcc files is 0.733333
-Gender accuracy for the first 15 mfcc files is 0.866667
+10, 500, 2
+Person accuracy for the first 15 mfcc files is 0.8
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 15
-Person accuracy for the first 15 mfcc files is 0.066667
-Gender accuracy for the first 15 mfcc files is 0.8
+10, 500, 5
+Person accuracy for the first 15 mfcc files is 1
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 20
-Person accuracy for the first 15 mfcc files is 0.666667
-Gender accuracy for the first 15 mfcc files is 0.4
+10, 500, 15
+Person accuracy for the first 15 mfcc files is 0.93333
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 50
-Person accuracy for the first 15 mfcc files is 0.666667
-Gender accuracy for the first 15 mfcc files is 0.4
+10, 500, 30
+Person accuracy for the first 15 mfcc files is 0.8
+Gender accuracy for the first 15 mfcc files is 1
 
-1000, 0.001, 100
-Person accuracy for the first 15 mfcc files is 0.066667
-Gender accuracy for the first 15 mfcc files is 0.066667
-
-Above is the results we get from testing with different values of parameters. We are achieving the best accracy with number of models equal to 10 with the smaller traning data (only with the first people having results for test data). For both all training data and smaller data, we are having the best results with number of models around 10~15. Either more models or less models will result in less accuracy. Interestingly smaller training data is giving us a better accuracy than the whole training data. It could be explained as that we are only computing the accracy with first 15 speaker and then smaller training data just gives us a smaller set to guess from and therefore achieves higher correct rate.
+Above is the results we get from testing with different values of parameters. We are achieving the best accracy with number of models equal to 5 with the smaller traning data (only with the first people having results for test data). For both all training data and smaller data, we are having the best results with number of models at 5. Either more models or less models will result in less accuracy. Interestingly smaller training data is giving us a better accuracy than the whole training data. It could be explained as that we are only computing the accracy with first 15 speaker and then smaller training data just gives us a smaller set to guess from and therefore achieves higher correct rate.
 Similarly, we can also be conducting such experiments with epsilon and even number of dimension we will be looking at.
 
 To improve the classification accuracy, the first thing comes into mind is we can change to use K-means to initialize the Gaussian model instead of doing it randomlly and risking stucking into local maxima. Another thing that can be improved is that we are calculating the determinant for the covariance matrix assuming it's a diagonal matrix however is not true. 
