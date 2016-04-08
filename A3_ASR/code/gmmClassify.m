@@ -3,9 +3,9 @@ trainPath = '/u/cs401/speechdata/Training';
 max_iter = 10;
 M = 15;
 
-% gmms = gmmTrain(trainPath, max_iter, 500, M);
-% save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
-load('gmms.mat', '-mat');
+gmms = gmmTrain(trainPath, max_iter, 500, M);
+save( ['gmms_', num2str(max_iter), '_', num2str(M),'.mat'], 'gmms', '-mat');
+% load('gmms.mat', '-mat');
 
 testPath = '/u/cs401/speechdata/Testing';
 mfccs = dir([testPath, filesep, '*.mfcc']);
