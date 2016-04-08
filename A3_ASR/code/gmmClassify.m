@@ -58,6 +58,8 @@ for i = 1:length(mfccs)
         name = person.name;
         target_line = strsplit(target_file{i + 1}, ':');
         target = strtrim(target_line(2));
+        disp(target);
+        disp(name);
         person_correct_count = person_correct_count + (strcmp(target, name));
         gender_correct_cound = gender_correct_cound + (strcmp(target(1), name(1)));
     end
