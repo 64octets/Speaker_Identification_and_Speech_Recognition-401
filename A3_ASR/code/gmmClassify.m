@@ -55,7 +55,7 @@ for i = 1:length(mfccs)
     fclose(output);
     if i <= 15
         person = probs{1};
-        name = person.name;
+        name = strtrim(person.name);
         target_line = strsplit(target_file{i + 1}, ':');
         target = strtrim(target_line(2));
         disp(target);
