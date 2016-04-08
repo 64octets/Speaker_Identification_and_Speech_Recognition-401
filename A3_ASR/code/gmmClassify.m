@@ -1,5 +1,5 @@
-% trainPath = '/u/cs401/speechdata/Training';
-trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401/A3_ASR/data';
+trainPath = '/u/cs401/speechdata/Training';
+% trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401/A3_ASR/data';
 max_iter = 10;
 M = 15;
 
@@ -42,8 +42,6 @@ for i = 1:length(mfccs)
     end
     for m = 1:length(probs)
         person = probs{m};
-        disp(person.name);
-        disp(person.prob);
     end
 
     person = probs{1};
@@ -58,8 +56,6 @@ for i = 1:length(mfccs)
         name = strtrim(person.name);
         target_line = strsplit(target_file{i + 1}, ':');
         target = strtrim(target_line(2));
-        disp(target);
-        disp(name);
         person_correct_count = person_correct_count + (strcmp(target, name));
         gender_correct_cound = gender_correct_cound + (strcmp(target{1}(1), name(1)));
     end
