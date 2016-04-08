@@ -35,7 +35,7 @@ function gmms = gmmTrain( dir_train, max_iter, epsilon, M )
         improvement = Inf;
         for i = 1:max_iter
             [p, L] = computeLikelihood(X, gmm, D, M);
-            disp(['L: ', L]);
+            disp(['L: ', num2str(L)]);
             if isnan(L) || isinf(L)
                 disp('Exit unexpectedlly!');
                 break;
