@@ -1,6 +1,6 @@
 % trainPath = '/u/cs401/speechdata/Training';
 trainPath = '/h/u8/g5/00/g5ran/Speaker_Identification_and_Speech_Recognition-401/A3_ASR/data';
-max_iter = 100;
+max_iter = 8;
 M = 50;
 
 gmms = gmmTrain(trainPath, max_iter, 500, M);
